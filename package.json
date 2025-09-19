@@ -1,0 +1,23 @@
+{
+  "name": "express-tdd",
+  "version": "1.0.0",
+  "description": "Demo TDD and Unit Tests",
+  "homepage": "https://github.com/StefaniaSgreva/express-tdd#readme",
+  "bugs": {
+    "url": "https://github.com/StefaniaSgreva/express-tdd/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StefaniaSgreva/express-tdd.git"
+  },
+  "license": "ISC",
+  "author": "Stefania Sgreva",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^30.1.3"
+  }
+}
