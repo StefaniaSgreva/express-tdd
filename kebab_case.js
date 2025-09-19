@@ -1,41 +1,29 @@
 module.exports = function (str) {
+    // Controlla che l'input sia una stringa, altrimenti lancia un errore
     if (typeof str !== 'string') {
         throw new Error('Input deve essere una stringa');
     }
 
-    // Converti tutti i caratteri in munuscolo
-    let toReturn = str.toLowerCase();
+    // Converte la stringa in minuscolo e rimuove gli spazi iniziali/finali
+    let toReturn = str.toLowerCase().trim();
 
-    // Sostituisci spazi con trattini
-    toReturn = toReturn.split(" ").join("-");
+    // Array di caratteri accentati da sostituire
+    const from = "àáâäãåèéêëìíîïòóôöõùúûü";
+    // Array dei caratteri corrispondenti senza accenti
+    const to   = "aaaaaaeeeeiiiiooooouuuu";
 
-    // Mappa caratteri accentati ai corrispettivi normali
-    toReturn = toReturn.split("").map((char) => {
-        switch (char) {
-            case "è":
-            case "é":
-                return "e";
-            case "ì":
-                return "i";
-            case "à":
-                return "a";
-            case "ù":
-                return "u";
-            case "ò":
-                return "o";
-            default:
-                return char;
-        }
-    }).join("");
+    // Loop per sostituire ogni carattere accentato con quello non accentato
+    for (let i = 0; i < from.length; i++) {
+        // Utilizzo regex globale per sostituire tutte le occorrenze
+        toReturn = toReturn.replace(new RegExp(from[i], 'g'), to[i]);
+    }
 
-    // Rimuovi o sostituisci caratteri speciali indesiderati
-    toReturn = toReturn.replace(/['?_\!£&%]/g, "-");
+    // Sostituisce ogni sequenza di caratteri che non siano lettere (a-z) o numeri (0-9) con un trattino
+    toReturn = toReturn.replace(/[^a-z0-9]+/g, '-');
 
-    // Sostituisci più trattini consecutivi con uno solo
-    toReturn = toReturn.replace(/-+/g, "-");
+    // Rimuove eventuali trattini all'inizio o alla fine della stringa
+    toReturn = toReturn.replace(/^-+|-+$/g, '');
 
-    // Rimuovi trattini iniziali o finali se presenti
-    toReturn = toReturn.replace(/^-+|-+$/g, "");
-
+    // Restituisce la stringa trasformata in kebab-case
     return toReturn;
 };
