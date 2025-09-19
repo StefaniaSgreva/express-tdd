@@ -1,10 +1,16 @@
 module.exports = function (str) {
-    let toReturn = str;
+    if (typeof str !== 'string') {
+        throw new Error('Input deve essere una stringa');
+    }
 
+    // Converti tutti i caratteri in munuscolo
+    let toReturn = str.toLowerCase();
+
+    // Sostituisci spazi con trattini
     toReturn = toReturn.split(" ").join("-");
-    toReturn = toReturn.split("").map((char) => {
-        const invalidCars = ["è", "é", "ì", "à", "ù","ò"];
 
+    // Mappa caratteri accentati ai corrispettivi normali
+    toReturn = toReturn.split("").map((char) => {
         switch (char) {
             case "è":
             case "é":
@@ -21,6 +27,15 @@ module.exports = function (str) {
                 return char;
         }
     }).join("");
+
+    // Rimuovi o sostituisci caratteri speciali indesiderati
+    toReturn = toReturn.replace(/['?_\!£&%]/g, "-");
+
+    // Sostituisci più trattini consecutivi con uno solo
+    toReturn = toReturn.replace(/-+/g, "-");
+
+    // Rimuovi trattini iniziali o finali se presenti
+    toReturn = toReturn.replace(/^-+|-+$/g, "");
 
     return toReturn;
 };
